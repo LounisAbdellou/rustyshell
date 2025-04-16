@@ -1,3 +1,4 @@
+mod binary_node;
 mod binary_tree;
 mod parsor;
 
@@ -16,11 +17,11 @@ impl Shell {
         }
     }
 
-    pub fn receive(&self, n_bytes: usize, input: &String) {
+    pub fn receive(&mut self, n_bytes: usize, input: &String) {
         if n_bytes < 1 {
             process::exit(0);
         }
 
-        println!("{input}");
+        let binary_tree = self.parsor.read(input);
     }
 }

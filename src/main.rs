@@ -5,7 +5,7 @@ use std::io;
 use shell::Shell;
 
 fn rustyshell() {
-    let shell = Shell::new();
+    let mut shell = Shell::new();
     let mut input = String::new();
 
     loop {
