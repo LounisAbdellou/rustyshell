@@ -1,11 +1,13 @@
-enum NodeKind {
+#[derive(Clone)]
+pub enum NodeKind {
     Root,
     And,
     Or,
 }
 
+#[derive(Clone)]
 pub struct Node {
-    kind: Option<NodeKind>,
+    kind: NodeKind,
     args: Vec<String>,
     childs: Vec<Node>,
 }
@@ -13,13 +15,13 @@ pub struct Node {
 impl Node {
     pub fn new() -> Self {
         Node {
-            kind: None,
+            kind: NodeKind::Root,
             args: Vec::new(),
             childs: Vec::new(),
         }
     }
 
-    pub fn get_kind(&self) -> &Option<NodeKind> {
+    pub fn get_kind(&self) -> &NodeKind {
         &self.kind
     }
 
@@ -32,7 +34,7 @@ impl Node {
     }
 
     pub fn set_kind(&mut self, kind: NodeKind) {
-        self.kind = Some(kind);
+        self.kind = kind;
     }
 
     pub fn push_arg(&mut self, arg: String) {
