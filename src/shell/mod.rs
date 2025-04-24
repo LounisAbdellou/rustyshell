@@ -1,6 +1,4 @@
-mod node;
 mod parsor;
-mod tree;
 
 use std::process;
 
