@@ -1,6 +1,6 @@
-mod binary_node;
-mod binary_tree;
+mod node;
 mod parsor;
+mod tree;
 
 use std::process;
 
@@ -22,6 +22,6 @@ impl Shell {
             process::exit(0);
         }
 
-        let binary_tree = self.parsor.read(input);
+        let tree = self.parsor.read(input);
     }
 }
