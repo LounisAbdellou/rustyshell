@@ -6,8 +6,14 @@ pub enum Separator {
 }
 
 pub struct Command {
-    args: Vec<String>,
+    args: VecDeque<String>,
     separator: Option<Separator>,
+}
+
+impl Command {
+    pub fn get_args(&self) -> &VecDeque<String> {
+        &self.args
+    }
 }
 
 pub struct Parsor {
@@ -36,36 +42,34 @@ impl Parsor {
     //     self.i = self.j;
     // }
 
-    // fn handle_encapsulation(&mut self, input: &String, current_node: &mut Node) {}
-
-    fn handle_arg(&mut self, args: &mut VecDeque<String>, arg: &String) {
+    fn handle_arg(&mut self, args: &mut VecDeque<String>, arg: &mut String) {
         self.i = self.j + 1;
         args.push_back(arg.clone());
-        // deque.push_back(arg.clone());
-        // self.node.push_arg(self.arg.clone());
-        // self.arg.clear();
+        arg.clear();
     }
 
-    pub fn read(&mut self, input: &String) -> VecDeque<VecDeque<String>> {
+    pub fn read(&mut self, input: &String) -> VecDeque<Command> {
         let mut arg = String::new();
         let mut args: VecDeque<String> = VecDeque::new();
-        let mut deque: VecDeque<VecDeque<String>> = VecDeque::new();
+        let mut commands: VecDeque<Command> = VecDeque::new();
 
         for character in input.chars() {
             match character {
-                ' ' => self.handle_arg(&mut args, &arg),
+                ' ' => self.handle_arg(&mut args, &mut arg),
                 '\n' => {
-                    self.handle_arg(&mut args, &arg);
-                    // tree.get_mut_root().push_child(self.node.clone());
+                    self.handle_arg(&mut args, &mut arg);
+                    commands.push_back(Command {
+                        args: args.clone(),
+                        separator: None,
+                    });
+                    args.clear();
                 }
-                // '(' => self.handle_encapsulation(input, &mut node),
-                // '\"' | '\'' => self.handle_quotes(input, &args),
                 _ => arg.push(character),
             }
 
             self.j += 1
         }
 
-        deque
+        commands
     }
 }

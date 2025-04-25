@@ -20,6 +20,12 @@ impl Shell {
             process::exit(0);
         }
 
-        let tree = self.parsor.read(input);
+        let commands = self.parsor.read(input);
+
+        for command in commands {
+            for arg in command.get_args() {
+                println!("{arg}");
+            }
+        }
     }
 }
